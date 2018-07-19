@@ -1,7 +1,8 @@
+#Thu, 19 Jul 2018 13:47:06 -0700
 #MethylationCNVAnalysis
 #Thu Jul 19 18:38:38 UTC 2018
 JVMLevel=
-LSID=MethylationCNVAnalysis.lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00379
+LSID=urn\:lsid\:broad.mit.edu\:cancer.software.genepattern.module.analysis\:00379\:999999999
 author=Clarence Mah;Mesirov Lab
 commandLine=<Rscript> <libdir>run.R --data <sample.data> --controlsdata <control.sample.names> --controls <control.samples.data> --genesfile <genes.to.highlight> --ignorefile <ignore.regions> --xy <sex.chromosomes>
 cpuType=any
@@ -12,7 +13,7 @@ name=MethylationCNVAnalysis
 os=any
 job.memory=16Gb
 job.cpuCount=4
-job.docker.image=genepattern/docker-r-3-4-methylationanalysis:0.15
+job.docker.image=genepattern/docker-r-3-4-methylationanalysis\:0.15
 privacy=private
 quality=production
 taskDoc=doc.html
@@ -95,3 +96,5 @@ p6_prefix=
 p6_prefix_when_specified=
 p6_type=java.lang.String
 p6_value=Yes\=Yes;No\=No
+
+publicationDate=07/19/2018 13\:47 

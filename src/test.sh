@@ -1,1 +1,0 @@
-Rscript run.R --data lukas_test_450k.tar.gz --controlsdata lukas_test_450k.tar.gz --controls none --genesfile detail_genes.txt --ignorefile ignore_regions.bed --xy no
