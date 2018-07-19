@@ -4,7 +4,7 @@
 JVMLevel=
 LSID=urn\:lsid\:broad.mit.edu\:cancer.software.genepattern.module.analysis\:00379\:999999999
 author=Clarence Mah;Mesirov Lab
-commandLine=<Rscript> <libdir>run.R --data <sample.data> --controlsdata <control.sample.names> --controls <control.samples.data> --genesfile <genes.to.highlight> --ignorefile <ignore.regions> --xy <sex.chromosomes>
+commandLine=<Rscript> <libdir>run.R --data <sample.data> --controlsdata <control.samples.data> --controls <control.sample.names> --genesfile <genes.to.highlight> --ignorefile <ignore.regions> --xy <sex.chromosomes>
 cpuType=any
 description=Methylation array preprocessing with the minfi R package and copy-number variation analysis with the conumee R package. Compatible with both 450k or EPIC array data.
 fileFormat=pdf;seg;txt
