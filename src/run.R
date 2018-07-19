@@ -240,9 +240,7 @@ cnv.analyze.plot <- function(sample, controls.names, cnv.data, anno) {
   CNV.write(cnv.analysis, what = "detail", file = paste(sample, ".detail.cnv.seg", sep = ""))
 }
 
-cnv.analyze.plot(all_samples[[1]], controls.names, cnv.data, anno)
-
-Analyze in parallel
+# Analyze in parallel
 write(paste("Using ", numCores, " cores...", sep = ""), stdout())
 foreach(sample = all_samples, .packages = c("conumee")) %dopar% {
   if (!(sample %in% controls.names)) {
