@@ -1,0 +1,22 @@
+# ant -f /Users/ckmah/Documents/GpUnit/build.xml -Dgpunit.diffStripTrailingCR="--strip-trailing-cr" -Dgp.host="gp-beta-ami.genepattern.org" -Dgp.url="https://gp-beta-ami.genepattern.org" -Dgp.user="ckmah" -Dgp.password="OwNgVcTEf86t" -Dgpunit.testfolder=`pwd` gpunit
+
+#
+# Note: this test uses a custom diff command
+#
+
+name: "MethylationCNVAnalysis - Basic test"
+module: MethylationCNVAnalysis
+params:
+    sample.data: "ftp://gpftp.broadinstitute.org/methylation/gbm_sample.tar.gz"
+    control.sample.names: "none"
+    control.samples.data: "ftp://gpftp.broadinstitute.org/methylation/gbm_sample.tar.gz"
+    genes.to.highlight: "../data/detail_genes.txt"
+    ignore.regions: "../data/ignore_regions.bed"
+    sex.chromosomes: "Yes"
+assertions:
+        diffCmd: diff <%gpunit.diffStripTrailingCR%> -q
+        files:
+            "gp_unit_test_file.txt":
+                diff: "output/basic_test/methyl-beta.txt"
+
+
