@@ -196,9 +196,9 @@ cnv.data <- CNV.load(all.data)
 
 # parallelization parameters
 all_samples <- colnames(cnv.data@intensity)
-numCores <- min(max(1, length(all_samples) - length(controls.names)), detectCores())
-cl <- makeCluster(numCores)
-registerDoParallel(cl)
+# numCores <- min(max(1, length(all_samples) - length(controls.names)), detectCores())
+# cl <- makeCluster(numCores)
+# registerDoParallel(cl)
 
 # CNV analysis/plot function
 cnv.analyze.plot <- function(sample, controls.names, cnv.data, anno) {
@@ -240,8 +240,8 @@ cnv.analyze.plot <- function(sample, controls.names, cnv.data, anno) {
 }
 
 # Analyze in parallel
-write(paste("Using ", numCores, " cores...", sep = ""), stdout())
-foreach(sample = all_samples, .packages = c("conumee")) %dopar% {
+write(paste("Using ", 1, " cores...", sep = ""), stdout())
+for (sample in all_samples) {
   if (!(sample %in% controls.names)) {
     cnv.analyze.plot(sample, controls.names, cnv.data, anno)
   }
