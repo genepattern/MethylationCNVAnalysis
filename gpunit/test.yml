@@ -5,16 +5,16 @@
 name: "MethylationCNVAnalysis - test"
 module: MethylationCNVAnalysis
 params:
-    sample.data: "ftp://gpftp.broadinstitute.org/methylation/gbm_sample.tar.gz"
+    sample.data: "../data/query_sample.tar.gz"
     control.sample.names: "none"
-    control.samples.data: "ftp://gpftp.broadinstitute.org/methylation/gbm_sample.tar.gz"
-    genes.to.highlight: "../data/detail_genes.txt"
+    control.samples.data: "../data/query_sample.tar.gz"
+    genes.to.highlight: "../data/common_cancer_genes.txt"
     ignore.regions: "../data/ignore_regions.bed"
     sex.chromosomes: "No"
 assertions:
         diffCmd: diff <%gpunit.diffStripTrailingCR%> -q
         files:
-            "GSM2941820_9980102013_R03C021.cnv.seg":
-                diff: "output/test/GSM2941820_9980102013_R03C021.cnv.seg"
+            "GSM2403489_8622007063_R01C01.cnv.seg":
+                diff: "output/test/GSM2403489_8622007063_R01C01.cnv.seg"
 
 
