@@ -121,11 +121,10 @@ plotQC(qc)
 
 # Plot Beta value distributions
 phenoData <- pData(all.data)
-if ("Sample_Group" %in% names(phenoData)) {
-densityPlot(all.data, sampGroups = phenoData$Sample_Group)
-} else {
-densityPlot(all.data)
-}
+phenoData$isControl <- colnames(all.data) %in% controls.names
+phenoData$isControl <- ifelse(phenoData$isControl == TRUE, "Control", "Query")
+
+densityPlot(all.data, sampGroups = phenoData$isControl)
 dev.off()
 
 # ----------- conumee analysis -----------
