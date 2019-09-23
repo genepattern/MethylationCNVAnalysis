@@ -3,6 +3,7 @@
 data/gbm_sample
 data/Panc1_Illumina_EPIC
 data/PancreasAdultBulkENCODE_Illumina_EPIC
+data/EPIC_data_conumee_problem_Merk.zip
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
