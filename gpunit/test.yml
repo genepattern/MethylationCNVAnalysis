@@ -1,13 +1,15 @@
-#
-# Note: this test uses a custom diff command
-#
+# Tests for methylation_cnv_analysis_module
 
-name: "MethylationCNVAnalysis - test"
+
+# Test module on Illumina 450k array
+# Note: this test uses a custom diff command
+# Illumina Infinium HumanMethylation450 array. GEO Series GSE90496.
+name: "MethylationCNVAnalysis Illumina 450k"
 module: MethylationCNVAnalysis
 params:
-    sample.data: "../data/query_sample.tar.gz"
+    sample.data: "../data/GSE90496_Illumina_450k.tar.gz"
     control.sample.names: "none"
-    control.samples.data: "../data/query_sample.tar.gz"
+    control.samples.data: "../data/GSE90496_Illumina_450k.tar.gz"
     genes.to.highlight: "../data/common_cancer_genes.txt"
     ignore.regions: "../data/ignore_regions.bed"
     sex.chromosomes: "No"
@@ -17,4 +19,36 @@ assertions:
             "GSM2403489_8622007063_R01C01.cnv.seg":
                 diff: "output/test/GSM2403489_8622007063_R01C01.cnv.seg"
 
+# Same test, but with FTP connection.
+name: "MethylationCNVAnalysis Illumina 450k 2"
+module: MethylationCNVAnalysis
+params:
+    sample.data: "../data/GSE90496_Illumina_450k.tar.gz"
+    control.sample.names: "none"
+    control.samples.data: "ftp://gpftp.broadinstitute.org/methylation/brain_controls.tar.gz"
+    genes.to.highlight: "ftp://gpftp.broadinstitute.org/methylation/common_cancer_genes.txt"
+    ignore.regions: " ftp://gpftp.broadinstitute.org/methylation/ignore_regions.bed"
+    sex.chromosomes: "No"
+assertions:
+        diffCmd: diff <%gpunit.diffStripTrailingCR%> -q
+        files:
+            "GSM2403489_8622007063_R01C01.cnv.seg":
+                diff: "output/test/GSM2403489_8622007063_R01C01.cnv.seg"
 
+# Test module on Illumina EPIC array circa 30 July 2016.
+# Illumina Infinium Methylation EPIC array
+# From ENCODE: see https://www.encodeproject.org/experiments/ENCSR848WWQ/
+name: "MethylationCNVAnalysis Illumina EPIC"
+module: MethylationCNVAnalysis
+params:
+    sample.data: "../data/Panc1_Illumina_EPIC.tar.gz"
+    control.sample.names: "none"
+    control.samples.data: "../data/PancreasAdultBulkENCODE_Illumina_EPIC.tar.gz"
+    genes.to.highlight: "../data/common_cancer_genes.txt"
+    ignore.regions: "../data/ignore_regions.bed"
+    sex.chromosomes: "No"
+assertions:
+        diffCmd: diff <%gpunit.diffStripTrailingCR%> -q
+        files:
+            "ENCBS425ENC.cnv.seg":
+                diff: "output/test/ENCBS425ENC.cnv.seg"
