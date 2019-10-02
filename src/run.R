@@ -10,7 +10,6 @@ suppressMessages(suppressWarnings(library("doParallel")))
 suppressMessages(suppressWarnings(library("parallel")))
 suppressMessages(suppressWarnings(library("biomaRt")))
 
-
 # Parse input arguments
 parser = OptionParser()
 
@@ -109,6 +108,67 @@ queryBiomart <- function(args){
 	return(detail_regions)
 }
 
+setGeneric("CNV.fit", function(query, ref, anno, ...) {
+    standardGeneric("CNV.fit")
+})
+
+# CNV.fit from conumee with controls n=1 bugfix
+#' @rdname CNV.fit
+setMethod("CNV.fit", signature(query = "CNV.data", ref = "CNV.data", anno = "CNV.anno"), 
+    function(query, ref, anno, name = NULL, intercept = TRUE) {
+        if (ncol(query@intensity) == 0) 
+            stop("query intensities unavailable, run CNV.load")
+        if (ncol(ref@intensity) == 0) 
+            stop("reference set intensities unavailable, run CNV.load")
+        
+        if (ncol(query@intensity) != 1) 
+            stop("query contains more than one sample.")
+        if (ncol(ref@intensity) == 1) 
+            warning("reference set contains only a single sample. use more samples for better results.")
+        
+        p <- names(anno@probes)  # ordered by location
+        if (!all(is.element(p, rownames(query@intensity)))) 
+            stop("query intensities not given for all probes.")
+        if (!all(is.element(p, rownames(ref@intensity)))) 
+            stop("reference set intensities not given for all probes.")
+        
+        object <- new("CNV.analysis")
+        object@date <- date()
+        object@fit$args <- list(intercept = intercept)
+        
+        if (!is.null(name)) {
+            names(object) <- name
+        } else {
+            names(object) <- colnames(query@intensity)
+        }
+        object@anno <- anno
+        
+        r <- cor(query@intensity[p, ], ref@intensity[p, ])
+        if (!is.matrix(r)){ # cor returns numeric if 1x1, matrix otherwise...
+            r <- as.matrix(r)
+            colnames(r) <- colnames(ref@intensity)
+        }
+        r <- r[1, ] < 0.99
+        if (any(!r)) message("query sample seems to also be in the reference set. not used for fit.")
+        if (intercept) {
+            ref.fit <- lm(y ~ ., data = data.frame(y = query@intensity[p, 
+                1], X = ref@intensity[p, r]))
+        } else {
+            ref.fit <- lm(y ~ . - 1, data = data.frame(y = query@intensity[p, 
+                1], X = ref@intensity[p, r]))
+        }
+        object@fit$coef <- ref.fit$coefficients
+        
+        ref.predict <- predict(ref.fit)
+        ref.predict[ref.predict < 1] <- 1
+        
+        object@fit$ratio <- log2(query@intensity[p, 1]/ref.predict[p])
+        object@fit$noise <- sqrt(mean((object@fit$ratio[-1] - object@fit$ratio[-length(object@fit$ratio)])^2, 
+            na.rm = TRUE))
+        
+        return(object)
+    })
+
 ###########
 # Script ##
 ###########
@@ -177,10 +237,6 @@ if (tolower(args$controls) != "none") {
   }
 }
 
-# bugfix conumee::CNV.fit cor() step
-if (length(controls.names) == 1) {
-	controls.names <- c(controls.names, controls.names)
-}
 
 # ---------- QC plots ----------
 pdf("qcPlots.pdf")
@@ -205,9 +261,8 @@ anno <- CNV.create_anno(array_type = arraytype, exclude_regions = ignore_regions
   detail_regions = detail_regions, chrXY = xy, bin_minprobes = 15, bin_minsize = 50000,
   bin_maxsize = 5e+06)
 if (arraytype == 'overlap'){
-	samples.data <- subset(samples.data, rownames(samples.data) %in% names(anno@probes))
 	anno@probes <- subset(anno@probes, names(anno@probes) %in% rownames(samples.data))
-	controls.data <- subset(controls.data, rownames(controls.data) %in% names(anno@probes))
+	anno@probes <- subset(anno@probes, names(anno@probes) %in% rownames(controls.data))
 }
 
 # Create CNV object from methylation data
@@ -229,7 +284,7 @@ cnv.analyze.plot <- function(sample, controls.data, sample.data, anno) {
   cnv.analysis <- CNV.bin(cnv.analysis)
   cnv.analysis <- CNV.detail(cnv.analysis)
   cnv.analysis <- CNV.segment(cnv.analysis)
-  CNV.detail(cnv.analysis)
+
   # Open file to write
   write(paste(sample, " - plotting", sep = ""), stdout())
   plot.filename <- paste(sample, ".cnvPlots.pdf", sep = "")
