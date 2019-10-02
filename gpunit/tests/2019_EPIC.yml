@@ -2,20 +2,19 @@
 #
 # ant -f ${GPUNIT_HOME}/build.xml -Dgpunit.diffStripTrailingCR="--strip-trailing-cr" -Dgp.host="beta.genepattern.org" -Dgp.url="https://beta.genepattern.org" -Dgp.user="chapmano" -Dgp.password="" -Dgpunit.testfolder=`pwd` gpunit
 #
-# Test module on Illumina 450k array
-# Note: this test uses a custom diff command
-# Illumina Infinium HumanMethylation450 array. GEO Series GSE90496.
-name: "MethylationCNVAnalysis Illumina 450k"
+# Test module on Illumina EPIC array circa 2019.
+# Illumina Infinium Methylation EPIC array
+name: "MethylationCNVAnalysis Illumina EPIC 2019"
 module: MethylationCNVAnalysis
 params:
-    query.sample.data: "../data/GSE90496_Illumina_450k.tar.gz"
+    query.sample.data: "../repro/EPIC_data_conumee_problem_Merk.zip"
     control.sample.names: "none"
-    control.sample.data: "../data/GSE90496_Illumina_450k.tar.gz"
+    control.sample.data: "../repro/brain_controls.tar.gz"
     genes.to.highlight: "../data/common_cancer_genes.txt"
     ignore.regions: "../data/ignore_regions.bed"
     sex.chromosomes: "No"
 assertions:
         diffCmd: diff <%gpunit.diffStripTrailingCR%> -q
         files:
-            "GSM2403489_8622007063_R01C01.cnv.seg":
-                diff: "output/test/GSM2403489_8622007063_R01C01.cnv.seg"
+            "203527980004_R03C01.cnv.seg":
+                diff: "output/test/203527980004_R03C01.cnv.seg"
