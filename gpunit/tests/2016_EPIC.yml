@@ -15,7 +15,8 @@ params:
     ignore.regions: "../data/ignore_regions.bed"
     sex.chromosomes: "No"
 assertions:
-        diffCmd: diff <%gpunit.diffStripTrailingCR%> -q
+        #diffCmd: diff <%gpunit.diffStripTrailingCR%> -q
+        jobStatus: success
         files:
-            "ENCBS425ENC.cnv.seg":
-                diff: "output/test/ENCBS425ENC.cnv.seg"
+            "ENCBS425ENC.cnv.seg": !!null
+                #diff: "output/ENCBS425ENC_52906.cnv.seg"

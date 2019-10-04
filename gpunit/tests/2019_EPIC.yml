@@ -9,12 +9,13 @@ module: MethylationCNVAnalysis
 params:
     query.sample.data: "../repro/EPIC_data_conumee_problem_Merk.zip"
     control.sample.names: "none"
-    control.sample.data: "../repro/brain_controls.tar.gz"
+    control.sample.data: "../repro/CNS_450k_controls.tar.gz"
     genes.to.highlight: "../data/common_cancer_genes.txt"
     ignore.regions: "../data/ignore_regions.bed"
     sex.chromosomes: "No"
 assertions:
-        diffCmd: diff <%gpunit.diffStripTrailingCR%> -q
+        #diffCmd: diff <%gpunit.diffStripTrailingCR%> -q
+        jobStatus: success
         files:
-            "203527980004_R03C01.cnv.seg":
-                diff: "output/test/203527980004_R03C01.cnv.seg"
+            "203527980004_R03C01.cnv.seg": !!null
+                #diff: "output/203527980004_R03C01_52907.cnv.seg"

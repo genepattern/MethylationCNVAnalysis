@@ -309,10 +309,14 @@ cnv.analyze.plot <- function(sample, controls.data, sample.data, anno) {
 
   write(paste(sample, " - writing seg files", sep = ""), stdout())
   # Export seg file
-  CNV.write(cnv.analysis, what = "segments", file = paste(sample, ".cnv.seg", sep = ""))
+  df <- CNV.write(cnv.analysis, what = "segments")
+  df <- format(df,digits=4)
+  write.table(df, sep='\t', quote=FALSE, row.names=FALSE, file = paste(sample, ".cnv.seg", sep = ""))
 
   # Export details file
-  CNV.write(cnv.analysis, what = "detail", file = paste(sample, ".detail.cnv.seg", sep = ""))
+  df <- CNV.write(cnv.analysis, what = "detail")
+  df <- format(df,digits=4)
+  write.table(df, sep='\t', quote=FALSE, row.names=FALSE, file = paste(sample, ".detail.cnv.seg", sep = ""))
 }
 
 # Analyze in parallel

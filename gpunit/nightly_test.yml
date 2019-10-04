@@ -18,4 +18,4 @@ assertions:
         diffCmd: diff <%gpunit.diffStripTrailingCR%> -q
         files:
             "GSM2403489_8622007063_R01C01.cnv.seg":
-                diff: "output/test/GSM2403489_8622007063_R01C01.cnv.seg"
+                diff: "output/450k_1.cnv.seg"
