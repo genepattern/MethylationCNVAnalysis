@@ -1,0 +1,22 @@
+# Tests for methylation_cnv_analysis_module
+#
+# ant -f ${GPUNIT_HOME}/build.xml -Dgpunit.diffStripTrailingCR="--strip-trailing-cr" -Dgp.host="beta.genepattern.org" -Dgp.url="https://beta.genepattern.org" -Dgp.user="chapmano" -Dgp.password="" -Dgpunit.testfolder=`pwd` gpunit
+#
+# Test module on Illumina EPIC array circa 30 July 2016.
+# Illumina Infinium Methylation EPIC array
+# From ENCODE: see https://www.encodeproject.org/experiments/ENCSR848WWQ/
+name: "MethylationCNVAnalysis Illumina EPIC"
+module: MethylationCNVAnalysis
+params:
+    query.sample.data: "../data/Panc1_Illumina_EPIC.tar.gz"
+    control.sample.names: "none"
+    control.sample.data: "../data/PancreasAdultBulkENCODE_Illumina_EPIC.tar.gz"
+    genes.to.highlight: "../data/common_cancer_genes.txt"
+    ignore.regions: "../data/ignore_regions.bed"
+    sex.chromosomes: "No"
+assertions:
+        #diffCmd: diff <%gpunit.diffStripTrailingCR%> -q
+        jobStatus: success
+        files:
+            "ENCBS425ENC.cnv.seg": !!null
+                #diff: "output/ENCBS425ENC_52906.cnv.seg"

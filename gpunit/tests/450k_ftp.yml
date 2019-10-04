@@ -1,0 +1,23 @@
+# Tests for methylation_cnv_analysis_module
+#
+# ant -f ${GPUNIT_HOME}/build.xml -Dgpunit.diffStripTrailingCR="--strip-trailing-cr" -Dgp.host="beta.genepattern.org" -Dgp.url="https://beta.genepattern.org" -Dgp.user="chapmano" -Dgp.password="" -Dgpunit.testfolder=`pwd` gpunit
+#
+# Test module on Illumina 450k array
+# Note: this test uses a custom diff command
+# Illumina Infinium HumanMethylation450 array. GEO Series GSE90496.
+# Same test as nightly, but with FTP connection.
+name: "MethylationCNVAnalysis Illumina 450k 2"
+module: MethylationCNVAnalysis
+params:
+    query.sample.data: "../data/GSE90496_Illumina_450k.tar.gz"
+    control.sample.names: "none"
+    control.sample.data: "../repro/CNS_450k_controls.tar.gz"
+    genes.to.highlight: "ftp://gpftp.broadinstitute.org/methylation/common_cancer_genes.txt"
+    ignore.regions: "ftp://gpftp.broadinstitute.org/methylation/ignore_regions.bed"
+    sex.chromosomes: "No"
+assertions:
+        #diffCmd: diff <%gpunit.diffStripTrailingCR%> -q
+        jobStatus: success
+        files:
+            "GSM2403489_8622007063_R01C01.cnv.seg": !!null
+                #diff: "output/GSM2403489_8622007063_R01C01_52908.cnv.seg"

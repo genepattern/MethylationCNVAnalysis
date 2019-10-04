@@ -1,0 +1,21 @@
+# Tests for methylation_cnv_analysis_module
+#
+# ant -f ${GPUNIT_HOME}/build.xml -Dgpunit.diffStripTrailingCR="--strip-trailing-cr" -Dgp.host="beta.genepattern.org" -Dgp.url="https://beta.genepattern.org" -Dgp.user="chapmano" -Dgp.password="" -Dgpunit.testfolder=`pwd` gpunit
+#
+# Test module on Illumina EPIC array circa 2019.
+# Illumina Infinium Methylation EPIC array
+name: "MethylationCNVAnalysis Illumina EPIC 2019"
+module: MethylationCNVAnalysis
+params:
+    query.sample.data: "../repro/EPIC_data_conumee_problem_Merk.zip"
+    control.sample.names: "none"
+    control.sample.data: "../repro/CNS_450k_controls.tar.gz"
+    genes.to.highlight: "../data/common_cancer_genes.txt"
+    ignore.regions: "../data/ignore_regions.bed"
+    sex.chromosomes: "No"
+assertions:
+        #diffCmd: diff <%gpunit.diffStripTrailingCR%> -q
+        jobStatus: success
+        files:
+            "203527980004_R03C01.cnv.seg": !!null
+                #diff: "output/203527980004_R03C01_52907.cnv.seg"
