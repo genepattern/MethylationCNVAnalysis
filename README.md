@@ -38,6 +38,7 @@ Seshan VE, Olshen A (2019). DNAcopy: DNA copy number data analysis. R package ve
 | genes to highlight	| A file with a list of genes (HUGO gene symbols) to highlight in output plots. Format as one gene symbol per line. An example file of common cancer genes may be found at [ftp://gpftp.broadinstitute.org/methylation/common_cancer_genes.txt](ftp://gpftp.broadinstitute.org/methylation/common_cancer_genes.txt) |
 | ignore regions	| .Bed file: regions which should be excluded from CN analysis (hg19). A standard file of highly repetitive regions may be found at [ftp://gpftp.broadinstitute.org/methylation/ignore_regions.bed](ftp://gpftp.broadinstitute.org/methylation/ignore_regions.bed) |
 | sex chromosomes *	| Include CN estimates of X & Y chromosomes. |
+
 \* required
 
 ## Output Files
