@@ -62,3 +62,9 @@ any
 
 Language:
 R v3.4.1
+
+Versions:
+
+2.0 | 09-2019 | EPIC 2019 update
+----|---------|----------------
+1.0 | 08-2018 | Initial release
