@@ -5,11 +5,13 @@ This is a GenePattern module written in R v3.6.1.
 
 Authors: Clarence Mah, Owen Chapman
 
+
 Contact:
 
 https://groups.google.com/forum/?utm_medium=email&utm_source=footer#!forum/genepattern-help
 
 ochapman@ucsd.edu
+
 
 Algorithm Version: Conumee 1.0.0
 
@@ -54,6 +56,7 @@ MethylationCNVAnalysis is distributed under a modified BSD license available at 
 
 ### Platform Dependencies
 Task Type:
+
 
 CPU Type:
 any
