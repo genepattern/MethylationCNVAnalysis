@@ -1,4 +1,4 @@
-# MethylationCNVAnalysis v2.0
+# MethylationCNVAnalysis v2.2
 ## Genome-wide copy number estimation and segmentation from Illumina 450k or EPIC Methylation arrays
 
 This is a GenePattern module written in R v3.6.1.
@@ -69,6 +69,10 @@ R v3.4.1
 
 Versions:
 
+2.2 | 09-2019 | Minor text fixes
+----|---------|----------------
+2.1 | 09-2019 | Minor text fixes
+----|---------|----------------
 2.0 | 09-2019 | EPIC 2019 update
 ----|---------|----------------
 1.0 | 08-2018 | Initial release
