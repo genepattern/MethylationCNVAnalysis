@@ -2,7 +2,7 @@
 #MethylationCNVAnalysis
 #Thu Jul 19 18:38:38 UTC 2018
 JVMLevel=
-LSID=urn\:lsid\:broad.mit.edu\:cancer.software.genepattern.module.analysis\:00379\:2.2.0
+LSID=urn\:lsid\:broad.mit.edu\:cancer.software.genepattern.module.analysis\:00379\:2.3.0
 author=Clarence Mah;Mesirov Lab
 commandLine=<Rscript> <libdir>run.R --data <query.sample.data> --controlsdata <control.sample.data> --controls <control.sample.names> --genesfile <genes.to.highlight> --ignorefile <ignore.regions> --xy <sex.chromosomes>
 cpuType=any
@@ -20,7 +20,7 @@ taskDoc=doc.html
 taskType=Methylation
 categories=Methylation;CNV Analysis
 userid=chapmano
-version=Update for EPIC 2019.
+version=Controls can also be EPIC 2019.
 p1_MODE=IN
 p1_TYPE=FILE
 p1_default_value=
