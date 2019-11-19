@@ -3,7 +3,7 @@
 #Thu Jul 19 18:38:38 UTC 2018
 JVMLevel=
 LSID=urn\:lsid\:broad.mit.edu\:cancer.software.genepattern.module.analysis\:00379\:2.3.0
-author=Clarence Mah;Mesirov Lab
+author=Owen Chapman;Clarence Mah;Mesirov Lab
 commandLine=<Rscript> <libdir>run.R --data <query.sample.data> --controlsdata <control.sample.data> --controls <control.sample.names> --genesfile <genes.to.highlight> --ignorefile <ignore.regions> --xy <sex.chromosomes>
 cpuType=any
 description=Methylation array preprocessing with the minfi R package and copy-number variation analysis with the conumee R package. Compatible with both 450k or EPIC array data.
@@ -60,7 +60,7 @@ p3_prefix_when_specified=
 p3_type=java.io.File
 p4_MODE=IN
 p4_TYPE=FILE
-p4_default_value=
+p4_default_value=ftp://gpftp.broadinstitute.org/methylation/common_cancer_genes.txt
 p4_description=A file with a list of genes (HUGO gene symbols) to highlight in output plots. Format as one gene symbol per line.
 p4_fileFormat=
 p4_flag=--genesfile
@@ -73,7 +73,7 @@ p4_type=java.io.File
 p4_value=
 p5_MODE=IN
 p5_TYPE=FILE
-p5_default_value=
+p5_default_value=ftp://gpftp.broadinstitute.org/methylation/ignore_regions.bed
 p5_description=A bed file specifying genomic regions to exclude from copy number analysis (hg19).
 p5_fileFormat=bed
 p5_flag=--ignorefile
