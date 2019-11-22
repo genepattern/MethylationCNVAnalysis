@@ -18,7 +18,7 @@ parser <- add_option(parser, c("--controlsdata"), help = "controls methylation d
 parser <- add_option(parser, c("--controls"), help = "names of control samples")
 parser <- add_option(parser, c("--genesfile"), help = "file with list of genes to highlight")
 parser <- add_option(parser, c("--ignorefile"), help = "bed file of regions to exclude")
-parser <- add_option(parser, c("--xy"), help = "include XY chromosomes")
+parser <- add_option(parser, c("--xy"), help = "include XY chromosomes. [yes, no]")
 args <- parse_args(parser)
 
 preprocess.minfi <- function(rawdata) {
@@ -126,12 +126,16 @@ setMethod("CNV.fit", signature(query = "CNV.data", ref = "CNV.data", anno = "CNV
         if (ncol(ref@intensity) == 1) 
             warning("reference set contains only a single sample. use more samples for better results.")
         
-        p <- names(anno@probes)  # ordered by location
-        if (!all(is.element(p, rownames(query@intensity)))) 
-            stop("query intensities not given for all probes.")
-        if (!all(is.element(p, rownames(ref@intensity)))) 
-            stop("reference set intensities not given for all probes.")
-        
+        if (!all(is.element(names(anno@probes), rownames(query@intensity)))) {
+            #warning("query intensities not given for all probes.") # This regularly happens with the EPIC probes
+			anno@probes <- subset(anno@probes, names(anno@probes) %in% rownames(query@intensity))
+		}
+        if (!all(is.element(names(anno@probes), rownames(ref@intensity)))) {
+            #warning("reference set intensities not given for all probes.")
+			anno@probes <- subset(anno@probes, names(anno@probes) %in% rownames(ref@intensity))
+        }
+		p <- names(anno@probes)  # ordered by location
+		
         object <- new("CNV.analysis")
         object@date <- date()
         object@fit$args <- list(intercept = intercept)
@@ -142,20 +146,16 @@ setMethod("CNV.fit", signature(query = "CNV.data", ref = "CNV.data", anno = "CNV
             names(object) <- colnames(query@intensity)
         }
         object@anno <- anno
-        
-        r <- cor(query@intensity[p, ], ref@intensity[p, ])
-        if (!is.matrix(r)){ # cor returns numeric if 1x1, matrix otherwise...
-            r <- as.matrix(r)
-            colnames(r) <- colnames(ref@intensity)
-        }
-        r <- r[1, ] < 0.99
-        if (any(!r)) message("query sample seems to also be in the reference set. not used for fit.")
+        r <- cor(query@intensity[p,, drop=FALSE ], ref@intensity[p,, drop=FALSE ]) # drop=FALSE required or R will coerce singletons to numeric...
+
+		r <- r[1, ] < 0.99
+		if (any(!r)) message("query sample seems to also be in the reference set. not used for fit.")
         if (intercept) {
             ref.fit <- lm(y ~ ., data = data.frame(y = query@intensity[p, 
-                1], X = ref@intensity[p, r]))
+                1], X = ref@intensity[p, r, drop=FALSE]))
         } else {
             ref.fit <- lm(y ~ . - 1, data = data.frame(y = query@intensity[p, 
-                1], X = ref@intensity[p, r]))
+                1], X = ref@intensity[p, r, drop=FALSE]))
         }
         object@fit$coef <- ref.fit$coefficients
         
@@ -260,10 +260,6 @@ write("Creating CNV annotation object...", stdout())
 anno <- CNV.create_anno(array_type = arraytype, exclude_regions = ignore_regions,
   detail_regions = detail_regions, chrXY = xy, bin_minprobes = 15, bin_minsize = 50000,
   bin_maxsize = 5e+06)
-if (arraytype == 'overlap'){
-	anno@probes <- subset(anno@probes, names(anno@probes) %in% rownames(samples.data))
-	anno@probes <- subset(anno@probes, names(anno@probes) %in% rownames(controls.data))
-}
 
 # Create CNV object from methylation data
 write("Creating CNV object...", stdout())
