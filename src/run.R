@@ -72,7 +72,7 @@ preprocess.minfi <- function(rawdata) {
 queryBiomart <- function(args){
 	# Query biomart for gene annotations
 	if (!("genesfile" %in% names(args))) {
-	  detail_regions <- NULL
+	  detail_regions <- GRanges(name=character(0))
 	} else {
 	  write("Querying biomaRt for gene locations...", stdout())
 	  gene.list <- read.table(args$genesfile, header = FALSE)
@@ -255,6 +255,8 @@ dev.off()
 
 # ----------- conumee analysis -----------
 
+print(detail_regions)
+
 # Create annotation object. Set to look at probes common to both 850k and 450k.
 write("Creating CNV annotation object...", stdout())
 anno <- CNV.create_anno(array_type = arraytype, exclude_regions = ignore_regions,
@@ -289,17 +291,20 @@ cnv.analyze.plot <- function(sample, controls.data, sample.data, anno) {
 
   # Overview plots
   CNV.genomeplot(cnv.analysis)
-  CNV.detailplot_wrap(cnv.analysis)
-
+  if (length(cnv.analysis@detail) != 0){
+	CNV.detailplot_wrap(cnv.analysis)
+  }
   # Chromosome plots
   for (chrom in rownames(anno@genome)) {
     CNV.genomeplot(cnv.analysis, chrom)
   }
 
   # Detail plots
-  genes <- names(cnv.analysis@detail$probes)
-  for (gene in genes) {
-    CNV.detailplot(cnv.analysis, gene)
+  if (length(cnv.analysis@detail) != 0){
+	genes <- names(cnv.analysis@detail$probes)
+	for (gene in genes) {
+		CNV.detailplot(cnv.analysis, gene)
+	}
   }
   dev.off()
 
@@ -310,9 +315,11 @@ cnv.analyze.plot <- function(sample, controls.data, sample.data, anno) {
   write.table(df, sep='\t', quote=FALSE, row.names=FALSE, file = paste(sample, ".cnv.seg", sep = ""))
 
   # Export details file
-  df <- CNV.write(cnv.analysis, what = "detail")
-  df <- format(df,digits=4)
-  write.table(df, sep='\t', quote=FALSE, row.names=FALSE, file = paste(sample, ".detail.cnv.seg", sep = ""))
+  if (length(cnv.analysis@detail) != 0){
+	df <- CNV.write(cnv.analysis, what = "detail")
+	df <- format(df,digits=4)
+	write.table(df, sep='\t', quote=FALSE, row.names=FALSE, file = paste(sample, ".detail.cnv.seg", sep = ""))
+  }
 }
 
 # Analyze in parallel
