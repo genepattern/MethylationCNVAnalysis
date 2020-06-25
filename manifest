@@ -2,9 +2,9 @@
 #MethylationCNVAnalysis
 #Thu Jul 19 18:38:38 UTC 2018
 JVMLevel=
-LSID=urn\:lsid\:broad.mit.edu\:cancer.software.genepattern.module.analysis\:00379\:2.3.0
+LSID=urn\:lsid\:broad.mit.edu\:cancer.software.genepattern.module.analysis\:00379\:2.4.0
 author=Owen Chapman;Clarence Mah;Mesirov Lab
-commandLine=<Rscript> <libdir>run.R --data <query.sample.data> --controlsdata <control.sample.data> --controls <control.sample.names> --genesfile <genes.to.highlight> --ignorefile <ignore.regions> --xy <sex.chromosomes>
+commandLine=<Rscript> <libdir>run.R --data <query.sample.data> --controlsdata <control.sample.data> --controls <control.sample.names> --ignorefile <ignore.regions> --xy <sex.chromosomes>
 cpuType=any
 description=Methylation array preprocessing with the minfi R package and copy-number variation analysis with the conumee R package. Compatible with both 450k or EPIC array data.
 fileFormat=pdf;seg;txt
@@ -20,7 +20,7 @@ taskDoc=doc.html
 taskType=Methylation
 categories=Methylation;CNV Analysis;conumee
 userid=chapmano
-version=Controls can also be EPIC 2019.
+version=geneslist optional
 p1_MODE=IN
 p1_TYPE=FILE
 p1_default_value=
@@ -63,12 +63,12 @@ p4_TYPE=FILE
 p4_default_value=ftp://gpftp.broadinstitute.org/methylation/common_cancer_genes.txt
 p4_description=A file with a list of genes (HUGO gene symbols) to highlight in output plots. Format as one gene symbol per line.
 p4_fileFormat=
-p4_flag=--genesfile
+p4_flag=
 p4_name=genes.to.highlight
 p4_numValues=0..1
 p4_optional=on
-p4_prefix=
-p4_prefix_when_specified=
+p4_prefix=--genesfile
+p4_prefix_when_specified=--genesfile
 p4_type=java.io.File
 p4_value=
 p5_MODE=IN

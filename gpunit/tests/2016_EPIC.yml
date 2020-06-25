@@ -11,8 +11,8 @@ params:
     query.sample.data: "../data/Panc1_Illumina_EPIC.tar.gz"
     control.sample.names: "none"
     control.sample.data: "../data/PancreasAdultBulkENCODE_Illumina_EPIC.tar.gz"
-    genes.to.highlight: "../data/common_cancer_genes.txt"
-    ignore.regions: "../data/ignore_regions.bed"
+    genes.to.highlight: "ftp://gpftp.broadinstitute.org/methylation/common_cancer_genes.txt"
+    ignore.regions: "ftp://gpftp.broadinstitute.org/methylation/ignore_regions.bed"
     sex.chromosomes: "No"
 assertions:
         #diffCmd: diff <%gpunit.diffStripTrailingCR%> -q

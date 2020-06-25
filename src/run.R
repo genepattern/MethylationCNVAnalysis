@@ -255,8 +255,6 @@ dev.off()
 
 # ----------- conumee analysis -----------
 
-print(detail_regions)
-
 # Create annotation object. Set to look at probes common to both 850k and 450k.
 write("Creating CNV annotation object...", stdout())
 anno <- CNV.create_anno(array_type = arraytype, exclude_regions = ignore_regions,
