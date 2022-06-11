@@ -51,11 +51,11 @@ preprocess.minfi <- function(rawdata) {
 
     # remove unannotated samples
     targets.rmdups <- targets[targets$Basename != "character(0)", ]
-    experiment.rgset <- read.metharray.exp(targets = targets.rmdups)
+    experiment.rgset <- read.metharray.exp(targets = targets.rmdups, force=TRUE)
 
     # Recursively find all .idat files in data.folder if sample sheet not found
     } else {
-    experiment.rgset <- read.metharray.exp(base = data.folder, recursive = TRUE)
+    experiment.rgset <- read.metharray.exp(base = data.folder, recursive = TRUE, force=TRUE)
     }
 
     # Perform preprocessing
