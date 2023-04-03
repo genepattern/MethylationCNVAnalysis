@@ -10,11 +10,11 @@
 name: "MethylationCNVAnalysis Illumina 450k 2"
 module: MethylationCNVAnalysis
 params:
-    query.sample.data: "../data/GSE90496_Illumina_450k.tar.gz"
+    query.sample.data: "../../data/GSE90496_Illumina_450k.tar.gz"
     control.sample.names: "none" 
     control.sample.data: "https://datasets.genepattern.org/data/module_support_files/MethylationCNVAnalysis/Methyl_cnv/CNS_450k_controls.tar.gz"
     genes.to.highlight: ""
-    ignore.regions: "ftp://gpftp.broadinstitute.org/methylation/ignore_regions.bed"
+    ignore.regions: "https://datasets.genepattern.org/gpftp/methylation/ignore_regions.bed"
     sex.chromosomes: "No"
 assertions:
         #diffCmd: diff <%gpunit.diffStripTrailingCR%> -q

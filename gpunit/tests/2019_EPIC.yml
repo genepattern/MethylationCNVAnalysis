@@ -7,11 +7,11 @@
 name: "MethylationCNVAnalysis Illumina EPIC 2019"
 module: MethylationCNVAnalysis
 params:
-    query.sample.data: "../data/EPIC_data_conumee_problem_Merk.zip"
+    query.sample.data: "../../data/EPIC_data_conumee_problem_Merk.zip"
     control.sample.names: "none"
     control.sample.data: "https://datasets.genepattern.org/data/module_support_files/MethylationCNVAnalysis/Methyl_cnv/CNS_450k_controls.tar.gz"
-    genes.to.highlight: "ftp://gpftp.broadinstitute.org/methylation/common_cancer_genes.txt"
-    ignore.regions: "ftp://gpftp.broadinstitute.org/methylation/ignore_regions.bed"
+    genes.to.highlight: "https://datasets.genepattern.org/gpftp/methylation/common_cancer_genes.txt"
+    ignore.regions: "https://datasets.genepattern.org/gpftp/methylation/ignore_regions.bed"
     sex.chromosomes: "No"
 assertions:
         #diffCmd: diff <%gpunit.diffStripTrailingCR%> -q

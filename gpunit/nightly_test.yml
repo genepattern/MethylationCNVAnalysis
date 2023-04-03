@@ -11,8 +11,8 @@ params:
     query.sample.data: "../data/GSE90496_Illumina_450k.tar.gz"
     control.sample.names: "none"
     control.sample.data: "../data/GSE90496_Illumina_450k.tar.gz"
-    genes.to.highlight: "ftp://gpftp.broadinstitute.org/methylation/common_cancer_genes.txt"
-    ignore.regions: "ftp://gpftp.broadinstitute.org/methylation/ignore_regions.bed"
+    genes.to.highlight: "https://datasets.genepattern.org/gpftp/methylation/common_cancer_genes.txt"
+    ignore.regions: "https://datasets.genepattern.org/gpftp/methylation/ignore_regions.bed"
     sex.chromosomes: "No"
 assertions:
         diffCmd: diff <%gpunit.diffStripTrailingCR%> -q
